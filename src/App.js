@@ -1,25 +1,70 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react"
+import { Routes, Route, Link } from "react-router-dom"
+import RecipeList from "./RecipeList"
+import CategoryPage from "./CategoryPage"
+import RecipeDetailPage from "./RecipeDetailPage"
+import SettingsPage from "./SettingsPage"
 
-function App() {
+export default function App() {
+  const [recipeList, setRecipeList] = useState( [ 
+    { id: 0, name: "Spaghetti", category: "Pasta" }, 
+    { id: 1, name: "Fettucini", category: "Pasta" } ,
+    { id: 2, name: "Ice Cream", category: "Desserts" },
+    { id: 3, name: "Pumpkin Pie", category: "Desserts" } 
+  ] )
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <nav className="d-flex gap-3 bg-light p-3">
+        <Link to="/">Home</Link>
+        <Link to="/settings">Settings</Link>
+        <Link to="/category/pasta">Pasta</Link>
+        <Link to="/category/desserts">Desserts</Link>
+      </nav>
+      <Routes>
+        <Route path="/" element={<RecipeList recipeList={recipeList}/>}/>
+        <Route path="/settings" element={<SettingsPage/>}/>
+        <Route path="/category/:categoryName" element={<CategoryPage recipeList={recipeList}/>}/>
+        <Route path="/recipes/:id" element={<RecipeDetailPage recipeList={recipeList}/>}/>
+      </Routes>
     </div>
-  );
+  )
 }
 
-export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Buffet rules: You can only take one thing
+function getFoodFromBuffet() {
+  return ["spaghetti", "ice cream"]
+}
+
+
+const [dinner, dessert] = getFoodFromBuffet()
